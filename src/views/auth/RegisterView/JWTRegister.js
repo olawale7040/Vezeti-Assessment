@@ -15,6 +15,8 @@ import {
 } from '@material-ui/core';
 import useAuth from 'src/hooks/useAuth';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import {registerUser} from 'src/Api/index';
+
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -29,14 +31,15 @@ const JWTRegister = ({ className, ...rest }) => {
     <Formik
       initialValues={{
         email: '',
-        name: '',
+        firstName: '',
+        lastName: '',
         password: '',
         policy: false,
         submit: null
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-        name: Yup.string().max(255).required('Name is required'),
+        firstname: Yup.string().max(255).required('Name is required'),
         password: Yup.string().min(7).max(255).required('Password is required'),
         policy: Yup.boolean().oneOf([true], 'This field must be checked')
       })}
@@ -46,17 +49,15 @@ const JWTRegister = ({ className, ...rest }) => {
         setSubmitting
       }) => {
         try {
-          await register(values.email, values.name, values.password);
-
-          if (isMountedRef.current) {
-            setStatus({ success: true });
-            setSubmitting(false);
-          }
+          registerUser()
+          .then(response=>{
+            console.log(response,"From Vetezi api")
+          })
         } catch (err) {
           console.error(err);
-          setStatus({ success: false });
-          setErrors({ submit: err.message });
-          setSubmitting(false);
+          // setStatus({ success: false });
+          // setErrors({ submit: err.message });
+          // setSubmitting(false);
         }
       }}
     >
@@ -76,15 +77,28 @@ const JWTRegister = ({ className, ...rest }) => {
           {...rest}
         >
           <TextField
-            error={Boolean(touched.name && errors.name)}
             fullWidth
-            helperText={touched.name && errors.name}
-            label="Name"
+            label="First Name"
             margin="normal"
-            name="name"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            value={values.name}
+            name="firstName"
+            value={values.firstName}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="Last Name"
+            margin="normal"
+            name="lastName"
+            value={values.lastName}
+            variant="outlined"
+          />
+          <TextField
+            fullWidth
+            label="Phone Number"
+            margin="normal"
+            name="mobile"
+            value={values.mobile}
+            type="text"
             variant="outlined"
           />
           <TextField

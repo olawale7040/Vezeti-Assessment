@@ -4,11 +4,11 @@ import {
   Box,
   Card,
   CardContent,
-  Chip,
+  // Chip,
   Container,
   Divider,
   Link,
-  Tooltip,
+  // Tooltip,
   Typography,
   makeStyles
 } from '@material-ui/core';
@@ -74,7 +74,7 @@ const RegisterView = () => {
       className={classes.root}
       title="Register"
     >
-      <div className={classes.banner}>
+      {/* <div className={classes.banner}>
         <Container maxWidth="md">
           <Box
             alignItems="center"
@@ -130,7 +130,7 @@ const RegisterView = () => {
             </Box>
           </Box>
         </Container>
-      </div>
+      </div> */}
       <Container
         className={classes.cardContainer}
         maxWidth="sm"

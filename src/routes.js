@@ -10,8 +10,8 @@ import {
 } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import DocsLayout from 'src/layouts/DocsLayout';
-import MainLayout from 'src/layouts/MainLayout';
-import HomeView from 'src/views/home/HomeView';
+// import MainLayout from 'src/layouts/MainLayout';
+// import HomeView from 'src/views/home/HomeView';
 import LoadingScreen from 'src/components/LoadingScreen';
 import AuthGuard from 'src/components/AuthGuard';
 import GuestGuard from 'src/components/GuestGuard';
@@ -54,7 +54,7 @@ const routes = [
   {
     exact: true,
     guard: GuestGuard,
-    path: '/login',
+    path: '/',
     component: lazy(() => import('src/views/auth/LoginView'))
   },
   {
@@ -338,25 +338,7 @@ const routes = [
       }
     ]
   },
-  {
-    path: '*',
-    layout: MainLayout,
-    routes: [
-      {
-        exact: true,
-        path: '/',
-        component: HomeView
-      },
-      {
-        exact: true,
-        path: '/pricing',
-        component: lazy(() => import('src/views/pricing/PricingView'))
-      },
-      {
-        component: () => <Redirect to="/404" />
-      }
-    ]
-  }
+  
 ];
 
 export default routes;

@@ -4,11 +4,9 @@ import {
   Box,
   Card,
   CardContent,
-  Chip,
   Container,
   Divider,
   Link,
-  Tooltip,
   Typography,
   makeStyles
 } from '@material-ui/core';
@@ -74,7 +72,7 @@ const LoginView = () => {
       className={classes.root}
       title="Login"
     >
-      <div className={classes.banner}>
+      {/* <div className={classes.banner}>
         <Container maxWidth="md">
           <Box
             alignItems="center"
@@ -130,7 +128,7 @@ const LoginView = () => {
             </Box>
           </Box>
         </Container>
-      </div>
+      </div> */}
       <Container
         className={classes.cardContainer}
         maxWidth="sm"
