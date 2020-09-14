@@ -1,0 +1,13 @@
+.button-spinner {
+    margin-left: 10px;
+    float: right;
+  }
+  .MuiBox-root.MuiBox-root-69 {
+    justify-content: initial !important;
+  }
+  .MuiBox-root.MuiBox-root-71{
+    justify-content: initial !important;
+  }
+  .spanError{
+      color:red;
+  }

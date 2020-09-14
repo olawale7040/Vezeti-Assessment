@@ -418,7 +418,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
               color="textPrimary"
               underline="none"
             >
-              {user.name}
+              {user.fullName}
             </Link>
             <Typography
               variant="body2"
@@ -430,7 +430,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
                 component={RouterLink}
                 to="/pricing"
               >
-                {user.tier}
+                {/* {user.tier} */}
               </Link>
             </Typography>
           </Box>

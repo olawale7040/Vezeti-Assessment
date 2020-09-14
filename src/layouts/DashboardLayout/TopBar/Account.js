@@ -76,7 +76,7 @@ const Account = () => {
             variant="h6"
             color="inherit"
           >
-            {user.name}
+            {user.fullName}
           </Typography>
         </Hidden>
       </Box>

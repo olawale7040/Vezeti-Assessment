@@ -50,7 +50,7 @@ const ProfileDetails = ({ className, user, ...rest }) => {
             gutterBottom
             variant="h3"
           >
-            {user.name}
+            {user.fullName}
           </Typography>
           <Typography
             color="textPrimary"

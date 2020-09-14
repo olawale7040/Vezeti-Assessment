@@ -59,6 +59,12 @@ const routes = [
   },
   {
     exact: true,
+    guard: GuestGuard,
+    path: '/forgotpassword',
+    component: lazy(() => import('src/views/auth/LoginView/forgotPassword.js'))
+  },
+  {
+    exact: true,
     path: '/login-unprotected',
     component: lazy(() => import('src/views/auth/LoginView'))
   },
@@ -335,7 +341,8 @@ const routes = [
       },
       {
         component: () => <Redirect to="/404" />
-      }
+      },
+      
     ]
   },
   

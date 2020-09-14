@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import mock from 'src/utils/mock';
 import wait from 'src/utils/wait';
+import {getUserAccountParameter}  from 'src/Api/index';
 
 const JWT_SECRET = 'devias-top-secret-key';
 const JWT_EXPIRES_IN = '2 days';
@@ -25,33 +26,29 @@ const users = [
 
 mock.onPost('/api/account/login').reply(async (config) => {
   try {
-    await wait(1000);
+    // await wait(1000);
 
-    const { email, password } = JSON.parse(config.data);
-    const user = users.find((_user) => _user.email === email);
-
-    if (!user) {
-      return [400, { message: 'Please check your email and password' }];
-    }
-
-    if (user.password !== password) {
-      return [400, { message: 'Invalid password' }];
-    }
-
+    const { userPayload : user } = JSON.parse(config.data);
+    console.log(user,"Login Payload");
     const accessToken = jwt.sign(
-      { userId: user.id },
+      { userId: user.userGlobalId },
       JWT_SECRET,
       { expiresIn: JWT_EXPIRES_IN }
     );
-
+    let userAvatar = '/static/images/avatars/avatar_6.png';
     return [200, {
       accessToken,
       user: {
-        id: user.id,
-        avatar: user.avatar,
-        email: user.email,
-        name: user.name,
-        tier: user.tier
+        id: user.userGlobalId,
+        userId:user.userGlobalId,
+        avatar: userAvatar,
+        email: user.userEmail,
+        firstName: user.userFirstName, 
+        lastName: user.userLastName,
+        fullName:`${user.userFirstName} ${user.userLastName}`,
+        phone:user.userPhoneNumber,
+        userAcountBalance:user.userAccountBalance,
+        tier: "Premium"
       }
     }];
   } catch (err) {
@@ -62,32 +59,29 @@ mock.onPost('/api/account/login').reply(async (config) => {
 
 mock.onPost('/api/account/register').reply(async (config) => {
   try {
-    await wait(1000);
+    const { email, firstName, lastName, mobile, password, userId,userAcountBalance} = JSON.parse(config.data);
+    console.log(config.data,"let see oooo")
 
-    const { email, name, password } = JSON.parse(config.data);
-    let user = users.find((_user) => _user.email === email);
-
-    if (user) {
-      return [400, { message: 'User already exists' }];
-    }
-
-    user = {
+   let user = {
       id: uuidv4(),
       avatar: null,
       canHire: false,
       country: null,
       email,
+      lastName,
       isPublic: true,
-      name,
+      firstName,
       password,
-      phone: null,
+      phone: mobile,
       role: 'admin',
       state: null,
-      tier: 'Standard'
+      tier: 'Standard',
+      userId,
+      userAcountBalance
     };
 
     const accessToken = jwt.sign(
-      { userId: user.id },
+      { userId: user.userId },
       JWT_SECRET,
       { expiresIn: JWT_EXPIRES_IN }
     );
@@ -98,8 +92,13 @@ mock.onPost('/api/account/register').reply(async (config) => {
         id: user.id,
         avatar: user.avatar,
         email: user.email,
-        name: user.name,
-        tier: user.tier
+        phone:user.phone,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        fullName:`${user.firstName} ${user.lastName}`,
+        tier: user.tier,
+        userId:user.userId,
+        userAcountBalance:user.userAcountBalance,
       }
     }];
   } catch (err) {
@@ -108,8 +107,9 @@ mock.onPost('/api/account/register').reply(async (config) => {
   }
 });
 
-mock.onGet('/api/account/me').reply((config) => {
+mock.onGet('/api/account/me').reply(async (config) => {
   try {
+    console.log(config,"From Where....")
     const { Authorization } = config.headers;
 
     if (!Authorization) {
@@ -117,20 +117,31 @@ mock.onGet('/api/account/me').reply((config) => {
     }
   
     const accessToken = Authorization.split(' ')[1];
-    const { userId } = jwt.verify(accessToken, JWT_SECRET);  
-    const user = users.find((_user) => _user.id === userId);
-
-    if (!user) {
+    const { userId } = jwt.verify(accessToken, JWT_SECRET); 
+    console.log("VZT", userId);
+    let payload ={
+      orgId:"725550",
+      userId:userId,
+    }
+    let userResponse = await getUserAccountParameter(payload)
+    if(userResponse.data.responseCode=="01")
+    {
       return [401, { message: 'Invalid authorization token' }];
     }
-
+    let user = userResponse.data.responseData;
+    console.log(user,".....")
     return [200, {
       user: {
-        id: user.id,
-        avatar: user.avatar,
-        email: user.email,
-        name: user.name,
-        tier: user.tier
+        id: user.userGlobalId,
+        userId:user.userGlobalId,
+        // avatar: user.avatar,
+        email: user.userEmail,
+        firstName: user.userFirstName, 
+        lastName: user.userLastName,
+        fullName:`${user.userFirstName} ${user.userLastName}`,
+        phone:user.userPhoneNumber,
+        userAcountBalance:user.userAccountBalance,
+        // tier: user.tier,
       }
     }];
   } catch (err) {

@@ -14,3 +14,19 @@ export const registerUser =(payload)=>{
 export const loginUser =(payload)=>{
   return Axios.post(`${baseURL}login/`,payload);
 }
+
+export const getUserAccountParameter =(payload)=>{
+  return Axios.post(`${baseURL}get-user-account-parameters/`,payload);
+}
+
+export const forgetPin =(payload)=>{
+  return Axios.post(`${baseURL}forgotpin/`,payload);
+}
+
+export const changeEmailAddress =(payload)=>{
+  return Axios.post(`${baseURL}change-user-email/`,payload);
+}
+
+export const forgotPassword =(payload)=>{
+  return Axios.post(`${baseURL}forgotpassword/`,payload);
+}

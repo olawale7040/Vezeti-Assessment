@@ -13,13 +13,14 @@ import {
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import GlobalStyles from 'src/components/GlobalStyles';
 import ScrollReset from 'src/components/ScrollReset';
-import CookiesNotification from 'src/components/CookiesNotification';
+// import CookiesNotification from 'src/components/CookiesNotification';
 import GoogleAnalytics from 'src/components/GoogleAnalytics';
-import SettingsNotification from 'src/components/SettingsNotification';
+// import SettingsNotification from 'src/components/SettingsNotification';
 import { AuthProvider } from 'src/contexts/JWTAuthContext';
 import useSettings from 'src/hooks/useSettings';
 import { createTheme } from 'src/theme';
 import routes, { renderRoutes } from 'src/routes';
+import 'src/assets/spinner.css';
 
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 const history = createBrowserHistory();
@@ -46,8 +47,8 @@ const App = () => {
                 <GlobalStyles />
                 <ScrollReset />
                 <GoogleAnalytics />
-                <CookiesNotification />
-                <SettingsNotification />
+                {/* <CookiesNotification /> */}
+                {/* <SettingsNotification /> */}
                 {renderRoutes(routes)}
               </AuthProvider>
             </Router>

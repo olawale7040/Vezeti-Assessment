@@ -187,11 +187,11 @@ const RegisterView = () => {
             </Box>
             <Link
               component={RouterLink}
-              to="/login"
+              to="/"
               variant="body2"
               color="textSecondary"
             >
-              Having an account
+              Having an account, login here
             </Link>
           </CardContent>
         </Card>

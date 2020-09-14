@@ -1,0 +1,10 @@
+.span-bold{
+    margin-right: 100px;
+    font-weight: bold;
+}
+span{
+    font-weight: bold;   
+}
+.MuiListItem-divider {
+    height: 70px;
+}

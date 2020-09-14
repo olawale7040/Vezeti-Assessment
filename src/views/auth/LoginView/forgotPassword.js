@@ -6,18 +6,14 @@ import {
   CardContent,
   Container,
   Divider,
-  Link,
   Typography,
   makeStyles
 } from '@material-ui/core';
 import './loginIndex.css';
-import { Alert } from '@material-ui/lab';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
 import useAuth from 'src/hooks/useAuth';
-import Auth0Login from './Auth0Login';
-import FirebaseAuthLogin from './FirebaseAuthLogin';
-import JWTLogin from './JWTLogin';
+import ForgotPasswordForm from './forgotPasswordForm';
 
 const methodIcons = {
   'Auth0': '/static/images/auth0.svg',
@@ -158,14 +154,9 @@ const LoginView = () => {
                   gutterBottom
                   variant="h2"
                 >
-                  Sign in
+                  Forgot Password
                 </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                >
-                  Sign in on the internal platform
-                </Typography>
+                
               </div>
               <div className={classes.currentMethodIcon}>
                 <img
@@ -178,38 +169,12 @@ const LoginView = () => {
               flexGrow={1}
               mt={3}
             >
-              {method === 'Auth0' && <Auth0Login /> }
-              {method === 'FirebaseAuth' && <FirebaseAuthLogin /> }
-              {method === 'JWT' && <JWTLogin /> }
+              {method === 'JWT' && <ForgotPasswordForm /> }
             </Box>
             <Box my={3}>
               <Divider />
             </Box>
-            <Box>
-            <Link
-              component={RouterLink}
-              to="/forgotpassword"
-              variant="body2"
-              className="link-btn"
-            >
-              Forgot password?
-            </Link>
-            </Box>
-            <Box mt={2}>
-            <Alert
-            >
-              <div>
-              <Link
-              component={RouterLink}
-              to="/register"
-              variant="body2"
-              className="link-btn"
-            >
-              Create new account
-            </Link>
-              </div>
-            </Alert>
-          </Box>
+            
           </CardContent>
         </Card>
       </Container>

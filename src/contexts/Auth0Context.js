@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }) => {
             id: user.sub,
             avatar: user.picture,
             email: user.email,
-            name: user.name,
+            name: user.fullName,
             tier: 'Premium'
           }
         }
@@ -119,7 +119,7 @@ export const AuthProvider = ({ children }) => {
                 id: user.sub,
                 avatar: user.picture,
                 email: user.email,
-                name: user.name,
+                name: user.fullName,
                 tier: 'Premium'
               }
             }

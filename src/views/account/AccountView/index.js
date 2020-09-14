@@ -10,8 +10,7 @@ import {
 import Page from 'src/components/Page';
 import Header from './Header';
 import General from './General';
-import Subscription from './Subscription';
-import Notifications from './Notifications';
+import ForgotPin from './General/ForgotPin';
 import Security from './Security';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,13 +24,12 @@ const useStyles = makeStyles((theme) => ({
 
 const AccountView = () => {
   const classes = useStyles();
-  const [currentTab, setCurrentTab] = useState('general');
+  const [currentTab, setCurrentTab] = useState('profile');
 
   const tabs = [
-    { value: 'general', label: 'General' },
-    { value: 'subscription', label: 'Subscription' },
-    { value: 'notifications', label: 'Notifications' },
-    { value: 'security', label: 'Security' }
+    { value: 'profile', label: 'Profile' },
+    { value: 'forgotpin', label: 'Forgot Pin' },
+    { value: 'changeemail', label: 'Change Email' },
   ];
 
   const handleTabsChange = (event, value) => {
@@ -62,12 +60,12 @@ const AccountView = () => {
             ))}
           </Tabs>
         </Box>
+
         <Divider />
         <Box mt={3}>
-          {currentTab === 'general' && <General />}
-          {currentTab === 'subscription' && <Subscription />}
-          {currentTab === 'notifications' && <Notifications />}
-          {currentTab === 'security' && <Security />}
+          {currentTab === 'profile' && <General />}
+          {currentTab === 'forgotpin' && <Security />}
+          {currentTab === 'changeemail' && <ForgotPin />}
         </Box>
       </Container>
     </Page>

@@ -17,6 +17,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import wait from 'src/utils/wait';
+import {forgetPin} from 'src/Api/index';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -25,22 +26,16 @@ const useStyles = makeStyles(() => ({
 const Security = ({ className, ...rest }) => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+  const phoneRegExp = /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
 
   return (
     <Formik
       initialValues={{
-        password: '',
-        passwordConfirm: '',
+        mobile: '',
         submit: null
       }}
       validationSchema={Yup.object().shape({
-        password: Yup.string()
-          .min(7, 'Must be at least 7 characters')
-          .max(255)
-          .required('Required'),
-        passwordConfirm: Yup.string()
-          .oneOf([Yup.ref('password'), null], 'Passwords must match')
-          .required('Required')
+        mobile: Yup.string().matches(phoneRegExp, 'Phone number is not valid').required('Phone Number is required'),
       })}
       onSubmit={async (values, {
         resetForm,
@@ -49,14 +44,35 @@ const Security = ({ className, ...rest }) => {
         setSubmitting
       }) => {
         try {
-          // NOTE: Make API request
-          await wait(500);
-          resetForm();
-          setStatus({ success: true });
-          setSubmitting(false);
-          enqueueSnackbar('Password updated', {
-            variant: 'success'
-          });
+          values.orgId="725550";
+            console.log(values,"Api Payload");
+            forgetPin(values)
+            .then(response=>{
+                console.log(response,"From Vetezi forgot pin")
+                if(response.data.responseCode=='01')
+                {
+                  setStatus({ success: false });
+                  setErrors({ submit: response.data.responseMessage });
+                  setSubmitting(false);
+                }
+                else if(response.data.responseCode=='00'){
+                  resetForm();
+                  setStatus({ success: true });
+                  setSubmitting(false);
+                  enqueueSnackbar(response.data.responseMessage, {
+                    variant: 'success'
+                  });
+                  console.log(response.data.responseData,"Api Success")
+                }
+              })
+          // // NOTE: Make API request
+          // await wait(500);
+          // resetForm();
+          // setStatus({ success: true });
+          // setSubmitting(false);
+          // enqueueSnackbar('Password updated', {
+          //   variant: 'success'
+          // });
         } catch (err) {
           console.error(err);
           setStatus({ success: false });
@@ -79,7 +95,7 @@ const Security = ({ className, ...rest }) => {
             className={clsx(classes.root, className)}
             {...rest}
           >
-            <CardHeader title="Change Password" />
+            <CardHeader title="Get Pin" />
             <Divider />
             <CardContent>
               <Grid
@@ -93,36 +109,17 @@ const Security = ({ className, ...rest }) => {
                   xs={12}
                 >
                   <TextField
-                    error={Boolean(touched.password && errors.password)}
-                    fullWidth
-                    helperText={touched.password && errors.password}
-                    label="Password"
-                    name="password"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    type="password"
-                    value={values.password}
-                    variant="outlined"
-                  />
-                </Grid>
-                <Grid
-                  item
-                  md={4}
-                  sm={6}
-                  xs={12}
-                >
-                  <TextField
-                    error={Boolean(touched.passwordConfirm && errors.passwordConfirm)}
-                    fullWidth
-                    helperText={touched.passwordConfirm && errors.passwordConfirm}
-                    label="Password Confirmation"
-                    name="passwordConfirm"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    type="password"
-                    value={values.passwordConfirm}
-                    variant="outlined"
-                  />
+            error={Boolean(touched.mobile && errors.mobile)}
+            fullWidth
+            helperText={touched.mobile && errors.mobile}
+            label="Phone Number"
+            margin="normal"
+            name="mobile"
+            value={values.mobile}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            variant="outlined"
+          />
                 </Grid>
               </Grid>
               {errors.submit && (
@@ -145,7 +142,7 @@ const Security = ({ className, ...rest }) => {
                 type="submit"
                 variant="contained"
               >
-                Change Password
+                Get Pin
               </Button>
             </Box>
           </Card>

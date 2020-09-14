@@ -55,7 +55,7 @@ const Header = ({ className, ...rest }) => {
           >
             Good Morning,
             {' '}
-            {user.name}
+            {user.fullName}
           </Typography>
           <Typography
             variant="subtitle1"

@@ -88,8 +88,8 @@ const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialAuthState);
 
-  const login = async (email, password) => {
-    const response = await axios.post('/api/account/login', { email, password });
+  const login = async (userPayload) => {
+    const response = await axios.post('/api/account/login', { userPayload});
     const { accessToken, user } = response.data;
 
     setSession(accessToken);
@@ -106,11 +106,15 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'LOGOUT' });
   };
 
-  const register = async (email, name, password) => {
+  const register = async (email, firstName,lastName, mobile, password,userId,userAcountBalance) => {
     const response = await axios.post('/api/account/register', {
       email,
-      name,
-      password
+      firstName,
+      lastName,
+      mobile,
+      password,
+      userId,
+      userAcountBalance
     });
     const { accessToken, user } = response.data;
 

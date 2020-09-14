@@ -1,9 +1,10 @@
-import React, { useState }  from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
-import {loginUser} from 'src/Api/index';
+import {forgotPassword} from 'src/Api/index';
+import { useSnackbar } from 'notistack';
 import {
   Box,
   Button,
@@ -11,29 +12,28 @@ import {
   TextField,
   makeStyles
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import useAuth from 'src/hooks/useAuth';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
+
 
 const useStyles = makeStyles(() => ({
   root: {}
 }));
 
 const JWTLogin = ({ className, ...rest }) => {
-  const [spinner, setSpinner] = useState(false);
   const classes = useStyles();
   const { login } = useAuth();
   const isMountedRef = useIsMountedRef();
-
+  const { enqueueSnackbar } = useSnackbar();
   return (
     <Formik
       initialValues={{
         email: 'demo@devias.io',
-        password: 'Password123',
         submit: null
       }}
       validationSchema={Yup.object().shape({
         email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-        password: Yup.string().max(255).required('Password is required')
       })}
       onSubmit={async (values, {
         setErrors,
@@ -41,13 +41,10 @@ const JWTLogin = ({ className, ...rest }) => {
         setSubmitting
       }) => {
         try {
-          setSpinner(true);
           values.orgId="725550";
-          values.typeEmailOrPhone="email";
-          loginUser(values)
+          forgotPassword(values)
           .then(response=>{
-            setSpinner(false);
-            console.log("api response",response.data.responseData)
+            console.log(response,"From Vetezi api")
             if(response.data.responseCode=='01')
             {
               setStatus({ success: false });
@@ -56,9 +53,11 @@ const JWTLogin = ({ className, ...rest }) => {
             }
             else if(response.data.responseCode=='00'){
               let user=response.data.responseData;
-              login(user);
               setStatus({ success: true });
             setSubmitting(false);
+            enqueueSnackbar(response.data.responseMessage, {
+                variant: 'success'
+              });
             }
           })
           // await login(values.email, values.password);
@@ -68,7 +67,6 @@ const JWTLogin = ({ className, ...rest }) => {
           //   setSubmitting(false);
           // }
         } catch (err) {
-          setSpinner(false);
           console.error(err);
           if (isMountedRef.current) {
             setStatus({ success: false });
@@ -107,19 +105,7 @@ const JWTLogin = ({ className, ...rest }) => {
             value={values.email}
             variant="outlined"
           />
-          <TextField
-            error={Boolean(touched.password && errors.password)}
-            fullWidth
-            helperText={touched.password && errors.password}
-            label="Password"
-            margin="normal"
-            name="password"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            type="password"
-            value={values.password}
-            variant="outlined"
-          />
+          
           {errors.submit && (
             <Box mt={3}>
               <FormHelperText error>
@@ -136,14 +122,7 @@ const JWTLogin = ({ className, ...rest }) => {
               type="submit"
               variant="contained"
             >
-              Log In
-              {spinner?
-                <img
-                                  src="/preloader.gif"
-                                //   style="margin-left:20px;"
-                                  className="button-spinner"
-                                />
-                             : null }
+              Submit
             </Button>
           </Box>
           
