@@ -30,7 +30,3 @@ export const changeEmailAddress =(payload)=>{
 export const forgotPassword =(payload)=>{
   return Axios.post(`${baseURL}forgotpassword/`,payload);
 }
-
-export const sendMail =(payload)=>{
-  return Axios.post(`https://vezeti-app.herokuapp.com/send-message`,payload);
-}

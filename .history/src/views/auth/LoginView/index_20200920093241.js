@@ -146,6 +146,15 @@ const LoginView = () => {
           </RouterLink>
           
         </Box>
+        <div className="brand-name">
+        <Typography
+                  color="textPrimary"
+                  gutterBottom
+                  variant="h2"
+                >
+                  Vezeti Web App
+                </Typography>
+                </div>
         <Card>
           <CardContent className={classes.cardContent}>
             <Box

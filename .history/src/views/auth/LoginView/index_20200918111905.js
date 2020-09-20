@@ -146,6 +146,15 @@ const LoginView = () => {
           </RouterLink>
           
         </Box>
+        <div className="brand-name">
+        <Typography
+                  color="textPrimary"
+                  gutterBottom
+                  variant="h2"
+                >
+                  Vezeti Web App
+                </Typography>
+                </div>
         <Card>
           <CardContent className={classes.cardContent}>
             <Box
@@ -162,19 +171,19 @@ const LoginView = () => {
                 >
                   Sign in
                 </Typography>
-                {/* <Typography
+                <Typography
                   variant="body2"
                   color="textSecondary"
                 >
                   Sign in on the internal platform
-                </Typography> */}
+                </Typography>
               </div>
-              {/* <div className={classes.currentMethodIcon}>
+              <div className={classes.currentMethodIcon}>
                 <img
                   alt="Auth method"
                   src={methodIcons[method]}
                 />
-              </div> */}
+              </div>
             </Box>
             <Box
               flexGrow={1}

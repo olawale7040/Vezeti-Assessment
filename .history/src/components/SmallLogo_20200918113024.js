@@ -1,11 +1,11 @@
 import React from 'react';
-// import './logostyle.css';
+import './logostyle.css';
 const Logo = (props) => {
   return (
     <img 
-    className="app-logo"
+    className="app-mini-logo"
       alt="Logo"
-      src="/static/new-logo.png"
+      src="/static/app-logo.png"
       {...props}
     />
   );

@@ -2,6 +2,10 @@
     margin-right: 100px;
     font-weight: bold;
 }
+.span-sm-bold{
+    margin-right:70px;
+    font-weight: bold;
+}
 span{
     font-weight: bold;   
 }

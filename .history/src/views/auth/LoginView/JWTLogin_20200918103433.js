@@ -62,6 +62,7 @@ const JWTLogin = ({ className, ...rest }) => {
           values.typeEmailOrPhone="email";
           loginUser(values)
           .then(response=>{
+            setSpinner(false);
             console.log("api response",response.data.responseData)
             if(response.data.responseCode=='01')
             {
@@ -71,7 +72,6 @@ const JWTLogin = ({ className, ...rest }) => {
             }
             else if(response.data.responseCode=='00'){
               let user=response.data.responseData;
-              setSpinner(false);
             let mailPayload={
               "email": user.userEmail,
               "message": "You just logged in to your Vezeti web application",
@@ -83,13 +83,12 @@ const JWTLogin = ({ className, ...rest }) => {
               };
                 sendMail(mailPayload)
                 .then(res=>{
-                  setSpinner(false);
+                  // console.log(res,"mail response")
                  login(user);
                   setStatus({ success: true });
                   setSubmitting(false);
                 })
                 .catch(errorMail=>{
-                  setSpinner(false);
                   login(user);
                   setStatus({ success: true });
                   setSubmitting(false);

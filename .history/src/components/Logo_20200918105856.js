@@ -1,11 +1,10 @@
 import React from 'react';
-// import './logostyle.css';
+
 const Logo = (props) => {
   return (
-    <img 
-    className="app-logo"
+    <img
       alt="Logo"
-      src="/static/new-logo.png"
+      src="/static/app-logo.png"
       {...props}
     />
   );

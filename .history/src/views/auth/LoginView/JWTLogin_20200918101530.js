@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
-import {loginUser,sendMail} from 'src/Api/index';
+import {loginUser} from 'src/Api/index';
 import {
   Box,
   Button,
@@ -62,6 +62,7 @@ const JWTLogin = ({ className, ...rest }) => {
           values.typeEmailOrPhone="email";
           loginUser(values)
           .then(response=>{
+            setSpinner(false);
             console.log("api response",response.data.responseData)
             if(response.data.responseCode=='01')
             {
@@ -71,30 +72,9 @@ const JWTLogin = ({ className, ...rest }) => {
             }
             else if(response.data.responseCode=='00'){
               let user=response.data.responseData;
-              setSpinner(false);
-            let mailPayload={
-              "email": user.userEmail,
-              "message": "You just logged in to your Vezeti web application",
-                "mailSubject":"Successfull Login Vezeti Platform",
-                "firstName":user.userFirstName,
-                "lastName":user.userLastName,
-                "phone":user.userPhoneNumber,
-                "accountBalance":user.userAccountBalance
-              };
-                sendMail(mailPayload)
-                .then(res=>{
-                  setSpinner(false);
-                 login(user);
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                })
-                .catch(errorMail=>{
-                  setSpinner(false);
-                  login(user);
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                  // console.log(errorMail,"Error sending mail")
-                })
+              login(user);
+              setStatus({ success: true });
+            setSubmitting(false);
             }
           })
           // await login(values.email, values.password);

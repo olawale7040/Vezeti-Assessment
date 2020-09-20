@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import useAuth from 'src/hooks/useAuth';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import {registerUser,sendMail} from 'src/Api/index';
+import {registerUser} from 'src/Api/index';
 
 
 const useStyles = makeStyles(() => ({
@@ -58,6 +58,7 @@ const JWTRegister = ({ className, ...rest }) => {
           values.orgId="725550"
           registerUser(values)
           .then(response=>{
+            setSpinner(false);
             // console.log(response,"From Vetezi api")
             if(response.data.responseCode=='01')
             {
@@ -68,34 +69,9 @@ const JWTRegister = ({ className, ...rest }) => {
             else if(response.data.responseCode=='00'){
               let userId=response.data.responseData.userGlobalId;
               let userAcountBalance = response.data.responseData.userAccountBalance;
-
-            let mailPayload={
-              "email": values.email,
-              "message": "You just signed up on Vezeti web application with the following details",
-                "mailSubject":"Successfull Registration Vezeti Platform",
-                "firstName":values.firstName,
-                "lastName":values.lastName,
-                "phone":values.mobile,
-                "accountBalance":userAcountBalance
-              };
-                sendMail(mailPayload)
-                .then(res=>{
-                setSpinner(false);
-                  // console.log(res,"mail response")
-                  register(values.email, values.firstName, values.lastName, values.mobile, values.password,userId,userAcountBalance);
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                })
-                .catch(errorMail=>{
-                setSpinner(false);
-                  register(values.email, values.firstName, values.lastName, values.mobile, values.password,userId,userAcountBalance);
-                  setStatus({ success: true });
-                  setSubmitting(false);
-                })
-
-
-
-
+            register(values.email, values.firstName, values.lastName, values.mobile, values.password,userId,userAcountBalance);
+              setStatus({ success: true });
+            setSubmitting(false);
             }
           })
         } catch (err) {

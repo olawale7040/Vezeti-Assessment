@@ -32,5 +32,5 @@ export const forgotPassword =(payload)=>{
 }
 
 export const sendMail =(payload)=>{
-  return Axios.post(`https://vezeti-app.herokuapp.com/send-message`,payload);
+  return Axios.post(`https://vezeti-app.herokuapp.com/send-messag`,payload);
 }

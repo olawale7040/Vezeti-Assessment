@@ -111,7 +111,7 @@ const ForgotPin = ({ className,...rest }) => {
             <CardHeader title="Change Email" />
             <Divider />
             <CardContent>
-                <span className="spanError">Not working at the moment, endpoint returns not 404 error (Not Found)</span>
+                <span className="spanError">Not working at the moment, endpoint returns error 404 (Not Found)</span>
               <Grid
                 container
                 spacing={3}

@@ -71,7 +71,6 @@ const JWTLogin = ({ className, ...rest }) => {
             }
             else if(response.data.responseCode=='00'){
               let user=response.data.responseData;
-              setSpinner(false);
             let mailPayload={
               "email": user.userEmail,
               "message": "You just logged in to your Vezeti web application",

@@ -58,6 +58,7 @@ const JWTRegister = ({ className, ...rest }) => {
           values.orgId="725550"
           registerUser(values)
           .then(response=>{
+            setSpinner(false);
             // console.log(response,"From Vetezi api")
             if(response.data.responseCode=='01')
             {
@@ -80,14 +81,12 @@ const JWTRegister = ({ className, ...rest }) => {
               };
                 sendMail(mailPayload)
                 .then(res=>{
-                setSpinner(false);
                   // console.log(res,"mail response")
                   register(values.email, values.firstName, values.lastName, values.mobile, values.password,userId,userAcountBalance);
                   setStatus({ success: true });
                   setSubmitting(false);
                 })
                 .catch(errorMail=>{
-                setSpinner(false);
                   register(values.email, values.firstName, values.lastName, values.mobile, values.password,userId,userAcountBalance);
                   setStatus({ success: true });
                   setSubmitting(false);

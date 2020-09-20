@@ -18,7 +18,6 @@ import useAuth from 'src/hooks/useAuth';
 import Auth0Login from './Auth0Login';
 import FirebaseAuthLogin from './FirebaseAuthLogin';
 import JWTLogin from './JWTLogin';
-import './loginpagestyle.css';
 
 const methodIcons = {
   'Auth0': '/static/images/auth0.svg',
@@ -144,7 +143,6 @@ const LoginView = () => {
           <RouterLink to="/">
             <Logo />
           </RouterLink>
-          
         </Box>
         <Card>
           <CardContent className={classes.cardContent}>
@@ -162,19 +160,19 @@ const LoginView = () => {
                 >
                   Sign in
                 </Typography>
-                {/* <Typography
+                <Typography
                   variant="body2"
                   color="textSecondary"
                 >
                   Sign in on the internal platform
-                </Typography> */}
+                </Typography>
               </div>
-              {/* <div className={classes.currentMethodIcon}>
+              <div className={classes.currentMethodIcon}>
                 <img
                   alt="Auth method"
                   src={methodIcons[method]}
                 />
-              </div> */}
+              </div>
             </Box>
             <Box
               flexGrow={1}

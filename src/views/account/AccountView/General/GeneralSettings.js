@@ -51,7 +51,7 @@ const GeneralSettings = ({ className, user, ...rest }) => {
             disableGutters
             divider
           >
-            <span className="span-bold">Phone number</span>
+            <span className="span-sm-bold">Phone number</span>
             <span>{user.phone}</span>
           </ListItem>
           <ListItem
@@ -59,7 +59,7 @@ const GeneralSettings = ({ className, user, ...rest }) => {
             disableGutters
             divider
           >
-            <span className="span-bold">Account Balance</span>
+            <span className="span-sm-bold">Account Balance</span>
             <span>{user.userAcountBalance}</span>
           </ListItem>
         </List>

@@ -12,7 +12,7 @@ import {
   SvgIcon
 } from '@material-ui/core';
 import { Menu as MenuIcon } from 'react-feather';
-import Logo from 'src/components/SmallLogo';
+import Logo from 'src/components/Logo';
 import { THEMES } from 'src/constants';
 import Account from './Account';
 import Contacts from './Contacts';
